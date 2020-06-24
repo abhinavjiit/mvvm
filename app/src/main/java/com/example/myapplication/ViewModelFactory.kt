@@ -3,13 +3,16 @@ package com.example.myapplication
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 
+
+@Suppress("UNCHECKED_CAST")
 class ViewModelFactory() : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(DataViewModel::class.java))
             {
+
                 val key = "DataViewModel"
                 return if(hashMapViewModel.containsKey(key)){
-                    getViewModel(key) as T
+                    getViewModel(key)  as T
                 } else {
                     addViewModel(key, DataViewModel)
                     getViewModel(key) as T

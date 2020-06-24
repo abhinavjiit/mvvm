@@ -1,5 +1,6 @@
 package com.example.myapplication
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import retrofit2.Call
@@ -18,18 +19,17 @@ object ApiCallRepo {
         val retro = Retrofit.Builder().baseUrl("https://jsonplaceholder.typicode.com/")
             .addConverterFactory(GsonConverterFactory.create()).build()
         val apiService = retro.create(ApiService::class.java)
-        val calll = apiService.getData("1")
-        calll.enqueue(object : Callback<DataModel> {
-            override fun onFailure(call: Call<DataModel>, t: Throwable) {
-
+        val calll = apiService.getData()
+        calll.enqueue(object : Callback<List<DataModel>> {
+            override fun onFailure(call: Call<List<DataModel>>, t: Throwable) {
+                Log.d("TAG_____", t.message.toString())
             }
 
-            override fun onResponse(call: Call<DataModel>, response: Response<DataModel>) {
+            override fun onResponse(call: Call<List<DataModel>>, response: Response<List<DataModel>>) {
                 val res = response.body()
                 val listData = ArrayList<DataModel>()
                 res?.let {
-                    listData.add(it)
-                    data.value = listData
+                    data.value = it
                 }
 
             }

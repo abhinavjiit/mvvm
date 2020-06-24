@@ -7,7 +7,7 @@ import retrofit2.http.Path
 
 interface ApiService {
 
-    @GET("todos/{value}")
-    fun getData(@Path("value") value: String): Call<DataModel>
+    @GET("/photos")
+    fun getData(): Call<List<DataModel>>
 
 }

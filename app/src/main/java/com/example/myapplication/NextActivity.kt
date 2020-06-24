@@ -15,14 +15,19 @@ class NextActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         viewModel = ViewModelProviders.of(this, ViewModelFactory()).get(DataViewModel::class.java)
-        val list = ArrayList<DataModel>()
-        val dataMOdel = DataModel()
-        dataMOdel.title = "Abhinav"
-        list.add(dataMOdel)
+        /* val list = ArrayList<DataModel>()
+         val dataMOdel = DataModel()
+         dataMOdel.title = "Abhinav"
+         list.add(dataMOdel)*/
 
         viewModel?.getProjectListObservable()?.observe(this, Observer {
             Toast.makeText(this, "changed", Toast.LENGTH_LONG).show()
         })
-        viewModel?.setProjectListObservable(list)
+        val allData = viewModel?.getProjectListObservable()
+        val dataaaa = allData?.value
+        dataaaa?.forEach {
+            it.title = "Abhinav"
+        }
+        viewModel?.setProjectListObservable(dataaaa!!) //will change the previous activity data using liveData and viewModel
     }
 }

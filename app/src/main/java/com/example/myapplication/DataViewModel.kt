@@ -8,7 +8,6 @@ import androidx.lifecycle.ViewModel
 object DataViewModel : ViewModel() {
     private var projectListObservable: LiveData<List<DataModel>>? = null
 
-
     init {
         projectListObservable = ApiCallRepo.getUserData()
     }
@@ -23,6 +22,7 @@ object DataViewModel : ViewModel() {
         val mutableLiveData = MutableLiveData<List<DataModel>>()
         mutableLiveData.value = data
         projectListObservable = mutableLiveData
+
     }
 
 }
