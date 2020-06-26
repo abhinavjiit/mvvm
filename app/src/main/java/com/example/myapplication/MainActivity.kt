@@ -8,16 +8,19 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : AppCompatActivity() {
-    var viewModel: DataViewModel? = null
-    lateinit var hello: TextView
+    private var viewModel: DataViewModel? = null
+    private lateinit var hello: TextView
     lateinit var viewModelFactory: ViewModelFactory
+    lateinit var firebaseAuth: FirebaseAuth
     lateinit var recyclerView: RecyclerView
-    val mainActivityAdapter: MainActivityAdapter by lazy { MainActivityAdapter() }
+    private val mainActivityAdapter: MainActivityAdapter by lazy { MainActivityAdapter() }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        firebaseAuth = FirebaseAuth.getInstance()
         hello = findViewById(R.id.hello)
         recyclerView = findViewById(R.id.recyclerView)
         hello.setOnClickListener {
@@ -25,11 +28,11 @@ class MainActivity : AppCompatActivity() {
             intent.putExtra("change", "change")
             startActivity(intent)
         }
+        ViewModelFactory.hashMapViewModel.clear()
+        viewModel = ViewModelProviders.of(this, ViewModelFactory()).get(DataViewModel::class.java)
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = mainActivityAdapter
 
-
-        viewModel = ViewModelProviders.of(this, ViewModelFactory()).get(DataViewModel::class.java)
     }
 
     override fun onStart() {
@@ -38,6 +41,9 @@ class MainActivity : AppCompatActivity() {
             mainActivityAdapter.setListData(it)
             mainActivityAdapter.notifyDataSetChanged()
         })
+    }
 
+    override fun onDestroy() {
+        super.onDestroy()
     }
 }

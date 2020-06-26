@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 
-object DataViewModel : ViewModel() {
+class DataViewModel : ViewModel() {
     private var projectListObservable: LiveData<List<DataModel>>? = null
 
     init {
@@ -13,12 +13,11 @@ object DataViewModel : ViewModel() {
     }
 
 
-
     fun getProjectListObservable(): LiveData<List<DataModel>>? {
         return projectListObservable
     }
 
-    fun setProjectListObservable(data: List<DataModel>) {
+    fun setProjectListObservable(data: List<DataModel>?) {
         val mutableLiveData = MutableLiveData<List<DataModel>>()
         mutableLiveData.value = data
         projectListObservable = mutableLiveData

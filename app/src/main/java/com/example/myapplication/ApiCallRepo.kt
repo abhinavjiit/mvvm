@@ -12,7 +12,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object ApiCallRepo {
 
-
     fun getUserData(): LiveData<List<DataModel>> {
         val data: MutableLiveData<List<DataModel>> =
             MutableLiveData<List<DataModel>>()
